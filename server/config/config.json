@@ -1,0 +1,26 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "ibnuibnu",
+    "database": "PokeVault",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "logging": false
+  },
+  "test": {
+    "username": "postgres",
+    "password": "ibnuibnu",
+    "database": "PokeVault",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "logging": false
+  },
+  "production": {
+    "username": "postgres",
+    "password": "ibnuibnu",
+    "database": "PokeVault",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "logging": false
+  }
+}
