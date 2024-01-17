@@ -11,7 +11,7 @@ module.exports = {
 				primaryKey: true,
 				type: Sequelize.INTEGER,
 			},
-			UserId: {
+			PlayerId: {
 				type: Sequelize.INTEGER,
 				references: {
 					model: "Players",

@@ -1,19 +1,18 @@
 /** @format */
 
-"use strict";
-
 const axios = require("axios");
 
 module.exports = {
 	async up(queryInterface, Sequelize) {
 		try {
-			const pokemonCount = 1025;
+			const pokemonListResponse = await axios.get(
+				"https://pokeapi.co/api/v2/pokemon?limit=1500"
+			);
+			const pokemonList = pokemonListResponse.data.results;
 
-			for (let i = 1; i <= pokemonCount; i++) {
-				const response = await axios.get(
-					`https://pokeapi.co/api/v2/pokemon/${i}`
-				);
-				const pokemonDetails = response.data;
+			for (const pokemon of pokemonList) {
+				const pokemonDetailsResponse = await axios.get(pokemon.url);
+				const pokemonDetails = pokemonDetailsResponse.data;
 
 				const { name, sprites, stats, types } = pokemonDetails;
 
@@ -28,12 +27,15 @@ module.exports = {
 						? "Uncommon"
 						: "Common";
 
+				const image =
+					sprites.front_default ||
+					"https://res.cloudinary.com/dpnfwku8u/image/upload/v1705504494/Raw/ahkpkn3jrmlwbyklwuzx.webp";
 				const pokemonTypes = types.map((type) => type.type.name).join(", ");
 
 				await queryInterface.bulkInsert("Pokemons", [
 					{
 						name,
-						image: sprites.front_default,
+						image,
 						attack: stats[1].base_stat,
 						defense: stats[2].base_stat,
 						hp: stats[0].base_stat,

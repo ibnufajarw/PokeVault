@@ -7,8 +7,8 @@ const bcrypt = require("../helpers/bcryptHelper");
 module.exports = (sequelize, DataTypes) => {
 	class Player extends Model {
 		static associate(models) {
-			Player.hasMany(models.MyPokemon, { foreignKey: "UserId" });
-			Player.hasMany(models.Order, { foreignKey: "UserId" });
+			Player.hasMany(models.MyPokemon, { foreignKey: "PlayerId" });
+			Player.hasMany(models.Order, { foreignKey: "PlayerId" });
 		}
 	}
 	Player.init(
