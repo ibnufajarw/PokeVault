@@ -7,6 +7,7 @@ const errorHandler = (error, req, res) => {
 		case "SequelizeValidationError":
 		case "SequelizeUniqueConstraintError":
 		case "ReferenceError":
+		case "InsufficientBalanceError":
 			res.status(400).json({ message: error.errors[0].message });
 			break;
 
