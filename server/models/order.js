@@ -6,7 +6,6 @@ module.exports = (sequelize, DataTypes) => {
 	class Order extends Model {
 		static associate(models) {
 			Order.belongsTo(models.Player, { foreignKey: "UserId" });
-			Order.belongsTo(models.Pokemon, { foreignKey: "PokemonId" });
 		}
 	}
 	Order.init(
@@ -21,13 +20,17 @@ module.exports = (sequelize, DataTypes) => {
 					},
 				},
 			},
-			PokemonId: {
+			orderId: {
 				type: DataTypes.INTEGER,
 				allowNull: false,
 				validate: {
 					notNull: {
 						args: true,
-						msg: "PokemonId is required.",
+						msg: "OrderId is required.",
+					},
+					notEmpty: {
+						args: true,
+						msg: "OrderId cannot be empty.",
 					},
 				},
 			},

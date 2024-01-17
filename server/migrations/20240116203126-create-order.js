@@ -11,14 +11,6 @@ module.exports = {
 				primaryKey: true,
 				type: Sequelize.INTEGER,
 			},
-			createdAt: {
-				allowNull: false,
-				type: Sequelize.DATE,
-			},
-			updatedAt: {
-				allowNull: false,
-				type: Sequelize.DATE,
-			},
 			UserId: {
 				type: Sequelize.INTEGER,
 				references: {
@@ -28,18 +20,21 @@ module.exports = {
 				onUpdate: "CASCADE",
 				onDelete: "CASCADE",
 			},
-			PokemonId: {
+			orderId: {
 				type: Sequelize.INTEGER,
-				references: {
-					model: "Pokemons",
-					key: "id",
-				},
-				onUpdate: "CASCADE",
-				onDelete: "CASCADE",
+				allowNull: false,
 			},
 			status: {
 				type: Sequelize.STRING,
 				allowNull: false,
+			},
+			createdAt: {
+				allowNull: false,
+				type: Sequelize.DATE,
+			},
+			updatedAt: {
+				allowNull: false,
+				type: Sequelize.DATE,
 			},
 		});
 	},

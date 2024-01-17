@@ -6,7 +6,6 @@ module.exports = (sequelize, DataTypes) => {
 	class Pokemon extends Model {
 		static associate(models) {
 			Pokemon.belongsToMany(models.Player, { through: models.MyPokemon });
-			Pokemon.hasMany(models.Order, { foreignKey: "PokemonId" });
 		}
 	}
 	Pokemon.init(
