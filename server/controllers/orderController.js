@@ -29,6 +29,13 @@ class OrderController {
 
 			const token = await snap.createTransaction(payload);
 
+			console.log({
+				PlayerId: playerId,
+				order_id: orderId,
+				status: "pending",
+				amount: amount,
+			});
+
 			const order = await Order.create({
 				PlayerId: playerId,
 				order_id: orderId,

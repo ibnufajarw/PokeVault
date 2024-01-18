@@ -88,7 +88,7 @@ class PlayerController {
 
 	static async playerDetail(req, res, next) {
 		try {
-			const PlayerId = req.player.id;
+			const PlayerId = req.user.id;
 
 			const player = await Player.findByPk(PlayerId, {
 				attributes: { exclude: ["password"] },

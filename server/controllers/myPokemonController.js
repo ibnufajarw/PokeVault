@@ -26,7 +26,7 @@ class MyPokemonController {
 	}
 
 	static async buyPokemon(req, res, next) {
-		const gachaPrice = 10000;
+		const gachaPrice = 0;
 
 		const { id: PlayerId, balance } = req.user;
 
