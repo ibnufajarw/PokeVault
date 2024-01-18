@@ -80,6 +80,28 @@ class MyPokemonController {
 			next(error);
 		}
 	}
+
+	static async deletePokemon(req, res, next) {
+		try {
+			const { id } = req.params;
+			const userId = req.user.id;
+
+			const myPokemon = await MyPokemon.findOne({
+				where: { id, PlayerId: userId },
+			});
+
+			if (!myPokemon) {
+				throw { name: "NotFoundError" };
+			}
+
+			await myPokemon.destroy();
+
+			res.status(200).json({ message: "Deleted" });
+		} catch (error) {
+			console.error(error);
+			next(error);
+		}
+	}
 }
 
 module.exports = MyPokemonController;

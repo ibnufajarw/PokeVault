@@ -2,19 +2,19 @@
 
 const { v4: uuidv4 } = require("uuid");
 const MidtransClient = require("midtrans-client");
-const { Order } = require("../models");
+const { Order, Player } = require("../models");
 
 class OrderController {
 	static async createOrder(req, res, next) {
 		try {
 			const { amount } = req.body;
+
 			const orderId = uuidv4();
-			const playerId = req.user;
+			const playerId = req.user.id;
 
 			const snap = new MidtransClient.Snap({
 				isProduction: false,
 				serverKey: process.env.MIDTRANS_SERVER_KEY,
-				// clientKey: process.env.MIDTRANS_CLIENT_KEY,
 			});
 
 			const payload = {
@@ -27,7 +27,7 @@ class OrderController {
 				},
 			};
 
-			const { token } = await snap.createTransactionToken(payload);
+			const token = await snap.createTransaction(payload);
 
 			const order = await Order.create({
 				PlayerId: playerId,
@@ -36,7 +36,7 @@ class OrderController {
 				amount: amount,
 			});
 
-			res.status(201).json({ token, order_id: order.order_id });
+			res.status(201).json({ token, order });
 		} catch (error) {
 			next(error);
 		}
@@ -46,20 +46,20 @@ class OrderController {
 		try {
 			const { orderId } = req.params;
 
-			const snap = new MidtransClient.Snap({
-				isProduction: false,
-				serverKey: process.env.MIDTRANS_SERVER_KEY,
-				// clientKey: process.env.MIDTRANS_CLIENT_KEY,
-			});
-
 			const order = await Order.findOne({
 				where: { order_id: orderId },
 			});
 
 			if (!order) {
-				throw { name: "NotFoundError" };
+				throw { name: "NotFoundError", message: "Order not found" };
 			}
 
+			const user = await Player.findByPk(req.user.id);
+			if (!user) {
+				throw { name: "NotFoundError", message: "User not found" };
+			}
+
+			await user.update({ balance: user.balance + order.amount });
 			order.status = "paid";
 			await order.save();
 

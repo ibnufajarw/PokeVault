@@ -5,7 +5,11 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
 	class Pokemon extends Model {
 		static associate(models) {
-			Pokemon.belongsToMany(models.Player, { through: models.MyPokemon });
+			Pokemon.belongsToMany(
+				models.Player,
+				{ through: models.MyPokemon },
+				{ foreignKey: "PokemonId" }
+			);
 		}
 	}
 	Pokemon.init(
