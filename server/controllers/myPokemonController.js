@@ -7,7 +7,12 @@ class MyPokemonController {
 		try {
 			const { id: PlayerId } = req.user;
 
-			const myPokemonList = await MyPokemon.findAll({ where: { PlayerId } });
+			const myPokemonList = await MyPokemon.findAll({
+				where: { PlayerId },
+				include: {
+					model: Pokemon,
+				},
+			});
 
 			if (myPokemonList.length === 0) {
 				res.status(200).json([]);

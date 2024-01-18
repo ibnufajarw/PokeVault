@@ -4,6 +4,7 @@ const errorHandler = (error, req, res) => {
 	// console.error(error, "<<< Error Handler");
 
 	switch (error.name) {
+		case "ValidationError":
 		case "SequelizeValidationError":
 		case "SequelizeUniqueConstraintError":
 		case "ReferenceError":

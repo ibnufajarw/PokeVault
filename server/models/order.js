@@ -20,17 +20,17 @@ module.exports = (sequelize, DataTypes) => {
 					},
 				},
 			},
-			orderId: {
+			order_id: {
 				type: DataTypes.INTEGER,
 				allowNull: false,
 				validate: {
 					notNull: {
 						args: true,
-						msg: "OrderId is required.",
+						msg: "Order_Id is required.",
 					},
 					notEmpty: {
 						args: true,
-						msg: "OrderId cannot be empty.",
+						msg: "Order_Id cannot be empty.",
 					},
 				},
 			},

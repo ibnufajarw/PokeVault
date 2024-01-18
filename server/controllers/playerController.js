@@ -50,6 +50,42 @@ class PlayerController {
 		}
 	}
 
+	static async googleLogin(req, res, next) {
+		try {
+			let google_token = req.headers.google_token;
+			let ticket = await google_oauth_client.verifyIdToken({
+				idToken: google_token,
+				audience: process.env.GOOGLE_CLIENT_ID,
+			});
+			const payload = ticket.getPayload();
+			console.log(payload, "<<<");
+
+			// let user = await Player.findOne({ where: { email: email } });
+			// if (!user) {
+			// 	user = await UserActivation.create({
+			// 		username: username,
+			// 		email: email,
+			// 		password: String(Math.random()),
+			// 	});
+			// }
+
+			let [user, isNew] = await UserActivation.findOrCreate({
+				where: { email: email },
+				default: {
+					username: username,
+					email: email,
+					password: generateToken({ random: String(Math.random()) }),
+				},
+			});
+
+			let accessToken = generateToken({ id: user.id });
+
+			res.json({ message: "Login Success", accessToken });
+		} catch (error) {
+			next(error);
+		}
+	}
+
 	static async playerDetail(req, res, next) {
 		try {
 			const PlayerId = req.player.id;

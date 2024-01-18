@@ -20,7 +20,7 @@ module.exports = {
 				onUpdate: "CASCADE",
 				onDelete: "CASCADE",
 			},
-			orderId: {
+			order_id: {
 				type: Sequelize.INTEGER,
 				allowNull: false,
 			},
