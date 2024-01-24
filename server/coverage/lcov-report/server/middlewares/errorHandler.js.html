@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">14.28% </span>
+                <span class="strong">69.23% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>2/14</span>
+                <span class='fraction'>9/13</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/12</span>
+                <span class='fraction'>6/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">14.28% </span>
+                <span class="strong">69.23% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>2/14</span>
+                <span class='fraction'>9/13</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -101,70 +101,70 @@
 <a name='L36'></a><a href='#L36'>36</a>
 <a name='L37'></a><a href='#L37'>37</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/** @format */
 &nbsp;
-const errorHandler = <span class="fstat-no" title="function not covered" >(e</span>rror, req, res, next) =&gt; {
-<span class="cstat-no" title="statement not covered" >	console.log(error, "&lt;&lt;&lt; Error Handler");</span>
+const errorHandler = (error, req, res, next) =&gt; {
+	// console.log(error, "&lt;&lt;&lt; Error Handler");
 &nbsp;
-<span class="cstat-no" title="statement not covered" >	switch (error.name) {</span>
-		case "ValidationError":
+	switch (error.name) {
+<span class="branch-0 cbranch-no" title="branch not covered" >		case "ValidationError":</span>
 		case "SequelizeValidationError":
 		case "SequelizeUniqueConstraintError":
 		case "ReferenceError":
 		case "InsufficientBalanceError":
-<span class="cstat-no" title="statement not covered" >			res.status(400).json({ message: error.errors[0].message });</span>
-<span class="cstat-no" title="statement not covered" >			break;</span>
+			res.status(400).json({ message: error.errors[0].message });
+			break;
 &nbsp;
 		case "NotFoundError":
-<span class="cstat-no" title="statement not covered" >			res.status(404).json({ message: "Not found" });</span>
-<span class="cstat-no" title="statement not covered" >			break;</span>
+			res.status(404).json({ message: "Not found" });
+			break;
 &nbsp;
-		case "Unauthorized":
-		case "AuthenticationError":
+<span class="branch-6 cbranch-no" title="branch not covered" >		case "Unauthorized":</span>
+<span class="branch-7 cbranch-no" title="branch not covered" >		case "AuthenticationError":</span>
 		case "JsonWebTokenError":
-<span class="cstat-no" title="statement not covered" >			res.status(401).json({ message: "Authentication failed" });</span>
-<span class="cstat-no" title="statement not covered" >			break;</span>
+			res.status(401).json({ message: "Authentication failed" });
+			break;
 &nbsp;
-		case "ForbiddenError":
-		case "AuthorizationError":
+<span class="branch-9 cbranch-no" title="branch not covered" >		case "ForbiddenError":</span>
+<span class="branch-10 cbranch-no" title="branch not covered" >		case "AuthorizationError":</span>
 <span class="cstat-no" title="statement not covered" >			res.status(403).json({ message: "Forbidden access" });</span>
 <span class="cstat-no" title="statement not covered" >			break;</span>
 &nbsp;
-		default:
+<span class="branch-11 cbranch-no" title="branch not covered" >		default:</span>
 <span class="cstat-no" title="statement not covered" >			res.status(500).json({ message: "Internal Server Error" });</span>
 <span class="cstat-no" title="statement not covered" >			break;</span>
 	}
@@ -178,7 +178,7 @@ module.exports = errorHandler;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-01-19T07:52:17.227Z
+                at 2024-01-24T19:55:17.836Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

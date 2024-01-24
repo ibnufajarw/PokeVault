@@ -9,7 +9,7 @@
   },
   "test": {
     "username": "postgres",
-    "password": "ibnuibnu",
+    "password": "postgres",
     "database": "PokeVault-Test",
     "host": "127.0.0.1",
     "dialect": "postgres",

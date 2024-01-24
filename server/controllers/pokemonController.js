@@ -49,12 +49,11 @@ class PokemonController {
 			const pokemon = await Pokemon.findByPk(id);
 
 			if (!pokemon) {
-				throw { name: "NotFoundError" };
+				throw { name: "NotFoundError", message: "Not found" };
 			}
 
 			res.status(200).json(pokemon);
 		} catch (error) {
-			// console.error(error);
 			next(error);
 		}
 	}

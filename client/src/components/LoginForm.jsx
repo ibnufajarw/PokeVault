@@ -3,8 +3,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import { GoogleLogin } from "@react-oauth/google";
+import Swal from "sweetalert2";
 
 const LoginForm = ({ onLogin }) => {
+	const CLIENT_ID =
+		"511330639928-qo2jmbbitgfc29s9g5rv1m99dc5oepo6.apps.googleusercontent.com";
 	const [formData, setFormData] = useState({
 		email: "",
 		password: "",
@@ -20,6 +24,27 @@ const LoginForm = ({ onLogin }) => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		onLogin(formData);
+	};
+
+	const responseGoogle = (response) => {
+		if (response.tokenId) {
+			console.log("Login Success: currentUser:", response.data);
+			setFormData(response.data);
+			Swal.fire({
+				title: "Login Successful!",
+				text: `Welcome, ${response.data.name}!`,
+				icon: "success",
+				confirmButtonText: "Ok",
+			});
+		} else {
+			console.log("Login failed: res:", response);
+			Swal.fire({
+				title: "Login Failed",
+				text: "Please try again.",
+				icon: "error",
+				confirmButtonText: "Ok",
+			});
+		}
 	};
 
 	return (
@@ -70,6 +95,13 @@ const LoginForm = ({ onLogin }) => {
 						Register
 					</Link>
 				</p>
+				<GoogleLogin
+					clientId={CLIENT_ID}
+					buttonText='Login with Google'
+					onSuccess={responseGoogle}
+					onFailure={responseGoogle}
+					cookiePolicy={"single_host_origin"}
+				/>
 			</form>
 		</div>
 	);

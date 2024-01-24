@@ -86,13 +86,10 @@ class PlayerController {
 		}
 	}
 
-	static async playerDetail(req, res, next) {
+	static async getPlayerDetail(req, res, next) {
 		try {
-			const PlayerId = req.user.id;
-
-			const player = await Player.findByPk(PlayerId, {
-				attributes: { exclude: ["password"] },
-			});
+			const { id } = req.params;
+			const player = await Player.findByPk(id);
 
 			if (!player) {
 				throw { name: "NotFoundError" };

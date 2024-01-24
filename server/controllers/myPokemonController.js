@@ -32,7 +32,6 @@ class MyPokemonController {
 
 			res.status(200).json(formattedList);
 		} catch (error) {
-			// console.log(error);
 			next(error);
 		}
 	}
@@ -87,7 +86,6 @@ class MyPokemonController {
 				},
 			});
 		} catch (error) {
-			// console.error(error);
 			next(error);
 		}
 	}
@@ -99,6 +97,9 @@ class MyPokemonController {
 
 			const myPokemon = await MyPokemon.findOne({
 				where: { id, PlayerId: userId },
+				include: {
+					model: Pokemon,
+				},
 			});
 
 			if (!myPokemon) {
@@ -107,9 +108,8 @@ class MyPokemonController {
 
 			await myPokemon.destroy();
 
-			res.status(200).json({ message: "Deleted" });
+			res.status(200).json({ message: "Deleted", deletedMyPokemon: myPokemon });
 		} catch (error) {
-			// console.log(error);
 			next(error);
 		}
 	}

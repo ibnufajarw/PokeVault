@@ -1,7 +1,7 @@
 /** @format */
 
 const errorHandler = (error, req, res, next) => {
-	console.log(error, "<<< Error Handler");
+	// console.log(error, "<<< Error Handler");
 
 	switch (error.name) {
 		case "ValidationError":

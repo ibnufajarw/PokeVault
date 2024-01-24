@@ -8,6 +8,6 @@ const authenticate = require("../middlewares/authenticate");
 
 router.post("/register", PlayerController.register);
 router.post("/login", PlayerController.login);
-router.get("/profile", authenticate, PlayerController.playerDetail);
+router.get("/profile", authenticate, PlayerController.getPlayerDetail);
 
 module.exports = router;

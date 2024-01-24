@@ -8,7 +8,7 @@ const myPokemonRoutes = require("./myPokemonRoute");
 const orderRoutes = require("./orderRoute");
 
 router.get("/", (req, res) => {
-	res.json({ message: "Hello World" });
+	res.status(200).json({ message: "Hello World" });
 });
 
 router.use("/players", playerRoutes);

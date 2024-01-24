@@ -11,7 +11,7 @@ class OrderController {
 		try {
 			const player = await Player.findByPk(playerId);
 			if (!player) {
-				throw new Error("PlayerNotFound");
+				throw { name: "NotFoundError" };
 			}
 
 			const paymentGateway = new midtransClient.Snap({
@@ -42,7 +42,7 @@ class OrderController {
 			const paymentResponse = await paymentGateway.createTransaction(
 				paymentParameters
 			);
-			res.json(paymentResponse);
+			res.status(201).json(paymentResponse);
 		} catch (error) {
 			next(error);
 		}
@@ -55,7 +55,7 @@ class OrderController {
 		try {
 			const order = await Order.findOne({ where: { order_id } });
 			if (!order) {
-				return res.status(404).send("Order not found");
+				throw { name: "NotFoundError" };
 			}
 
 			if (
@@ -81,7 +81,7 @@ class OrderController {
 
 			res.status(200).send("Payment status updated");
 		} catch (error) {
-			res.status(500).send(error.message);
+			next(error);
 		}
 	}
 }
