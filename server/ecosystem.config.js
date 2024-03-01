@@ -6,6 +6,8 @@ module.exports = {
 			name: "instance-1",
 			script: "./bin/www",
 			env: {
+				NODE_ENV: "production",
+				PORT: 80,
 				JWT_SECRET: "secret",
 				GOOGLE_CLIENT_ID:
 					"511330639928-qo2jmbbitgfc29s9g5rv1m99dc5oepo6.apps.googleusercontent.com",

@@ -1,65 +1,52 @@
 /** @format */
 
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProfile } from "../store/profileSlice";
 import Navbar from "../components/Navbar";
 
 const PlayerProfile = () => {
-	const [player, setPlayer] = useState(null);
-	const [loading, setLoading] = useState(true);
+	const myProfile = useSelector((state) => {
+		return state.profile.data;
+	});
+	// console.log(myProfile, "<< myProfile");
+	const dispatch = useDispatch();
 
 	useEffect(() => {
-		const fetchPlayerProfile = async () => {
-			try {
-				const response = await axios.get(
-					// "https://pokevault.ibnufajarweb.site/players/profile",
-					"http://localhost:3000/players/profile",
-					{
-						headers: {
-							Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-						},
-					}
-				);
-
-				setPlayer(response.data);
-				setLoading(false);
-			} catch (error) {
-				console.error("Failed to fetch player profile", error);
-				setLoading(false);
-			}
-		};
-
-		fetchPlayerProfile();
+		dispatch(fetchProfile());
 	}, []);
 
 	return (
 		<>
 			<Navbar />
-			<div className='container mx-auto mt-8'>
-				<h2 className='text-3xl font-bold mb-4 text-red-500'>Player Profile</h2>
-				{loading && <p>Loading...</p>}
-				{!loading && player && (
-					<table className='table-auto'>
-						<tbody>
-							<tr>
-								<td className='font-bold pr-4 text-yellow-600'>ID:</td>
-								<td>{player.id}</td>
-							</tr>
-							<tr>
-								<td className='font-bold pr-4 text-yellow-600'>Username:</td>
-								<td>{player.username}</td>
-							</tr>
-							<tr>
-								<td className='font-bold pr-4 text-yellow-600'>Email:</td>
-								<td>{player.email}</td>
-							</tr>
-							<tr>
-								<td className='font-bold pr-4 text-yellow-600'>Balance:</td>
-								<td>{player.balance} coins</td>
-							</tr>
-						</tbody>
-					</table>
-				)}
+			<div className='min-h-screen bg-gradient-to-r from-amber-400 via-red-600 to-red-400 pt-8'>
+				<div className='container mx-auto bg-white p-8 rounded shadow-md bg-opacity-20 backdrop-blur-md'>
+					<h2 className='text-3xl font-bold mb-6 text-white text-center'>
+						Player Profile
+					</h2>
+					<div className='overflow-x-auto'>
+						<table className='table-auto w-full text-left whitespace-no-wrap'>
+							<tbody>
+								<tr>
+									<td className='font-bold pr-4 text-yellow-600'>ID:</td>
+									<td>{myProfile.id}</td>
+								</tr>
+								<tr>
+									<td className='font-bold pr-4 text-yellow-600'>Username:</td>
+									<td>{myProfile.username}</td>
+								</tr>
+								<tr>
+									<td className='font-bold pr-4 text-yellow-600'>Email:</td>
+									<td>{myProfile.email}</td>
+								</tr>
+								<tr>
+									<td className='font-bold pr-4 text-yellow-600'>Balance:</td>
+									<td>{myProfile.balance} coins</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
 			</div>
 		</>
 	);

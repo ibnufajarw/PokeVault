@@ -7,7 +7,7 @@ class PokemonController {
 	static async pokemonList(req, res, next) {
 		try {
 			const { name, type, sort, order, page = 1 } = req.query;
-			const limitPerPage = 100;
+			const limitPerPage = 40;
 
 			const queryOptions = {
 				where: {},

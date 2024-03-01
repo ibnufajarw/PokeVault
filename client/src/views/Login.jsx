@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import axios from "axios";
+import axios from "../components/instances/instance";
 import Swal from "sweetalert2";
 import Navbar from "../components/Navbar";
 import LoginForm from "../components/LoginForm";
@@ -23,11 +23,7 @@ const Login = () => {
 
 	const handleLogin = async (userData) => {
 		try {
-			const response = await axios.post(
-				// "https://pokevault.ibnufajarweb.site/players/login",
-				"http://localhost:3000/players/login",
-				userData
-			);
+			const response = await axios.post(`/players/login`, userData);
 			setIsLoggedIn(true);
 			localStorage.setItem("accessToken", response.data.accessToken);
 

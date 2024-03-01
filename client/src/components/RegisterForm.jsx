@@ -24,11 +24,17 @@ const RegisterForm = ({ onRegister }) => {
 	};
 
 	return (
-		<div className='max-w-md mx-auto p-4 bg-white rounded shadow-md'>
-			<h2 className='text-2xl font-bold mb-4 text-red-500'>Register</h2>
-			<form onSubmit={handleSubmit}>
+		<div className='login-form-container flex items-center justify-center min-h-screen bg-gradient-to-r from-amber-400 via-red-600 to-red-400'>
+			<form
+				onSubmit={handleSubmit}
+				className='login-form bg-white p-20 rounded shadow-xl bg-opacity-20 backdrop-blur-md'>
+				<h2 className='text-2xl font-bold mb-4 text-white text-center'>
+					Register
+				</h2>
 				<div className='mb-4'>
-					<label htmlFor='username' className='block text-yellow-600'>
+					<label
+						htmlFor='username'
+						className='block text-gray-700 text-sm font-bold mb-2'>
 						Username
 					</label>
 					<input
@@ -37,12 +43,14 @@ const RegisterForm = ({ onRegister }) => {
 						name='username'
 						value={formData.username}
 						onChange={handleChange}
-						className='w-full p-2 border rounded'
+						className='border rounded w-full py-2 px-3 text-gray-700'
 						required
 					/>
 				</div>
 				<div className='mb-4'>
-					<label htmlFor='email' className='block text-yellow-600'>
+					<label
+						htmlFor='email'
+						className='block text-gray-700 text-sm font-bold mb-2'>
 						Email
 					</label>
 					<input
@@ -51,12 +59,14 @@ const RegisterForm = ({ onRegister }) => {
 						name='email'
 						value={formData.email}
 						onChange={handleChange}
-						className='w-full p-2 border rounded'
+						className='border rounded w-full py-2 px-3 text-gray-700'
 						required
 					/>
 				</div>
 				<div className='mb-4'>
-					<label htmlFor='password' className='block text-yellow-600'>
+					<label
+						htmlFor='password'
+						className='block text-gray-700 text-sm font-bold mb-2'>
 						Password
 					</label>
 					<input
@@ -65,22 +75,24 @@ const RegisterForm = ({ onRegister }) => {
 						name='password'
 						value={formData.password}
 						onChange={handleChange}
-						className='w-full p-2 border rounded'
+						className='border rounded w-full py-2 px-3 text-gray-700'
 						required
 					/>
 				</div>
 				<button
 					type='submit'
-					className='bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700 focus:outline-none focus:shadow-outline'>
+					className='bg-red-500 hover:bg-amber-400 hover:text-gray-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300'>
 					Register
 				</button>
+				<p className='text-center text-gray-900 text-sm mt-4'>
+					Already have an account?{" "}
+					<Link
+						to='/players/login'
+						className='text-black hover:text-white rounded font-bold text-md'>
+						Login here.
+					</Link>
+				</p>
 			</form>
-			<p className='mt-4 text-gray-700'>
-				Already have an account?{" "}
-				<Link to='/players/login' className='text-red-500 hover:underline'>
-					Login here.
-				</Link>
-			</p>
 		</div>
 	);
 };

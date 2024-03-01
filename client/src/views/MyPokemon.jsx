@@ -1,66 +1,51 @@
 /** @format */
 
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "../components/instances/instance";
+import { fetchMyPokemon, deletePokemon } from "../store/myPokemonSlice";
 import Swal from "sweetalert2";
 import Navbar from "../components/Navbar";
 
 const MyPokemonList = () => {
-	const [myPokemonList, setMyPokemonList] = useState([]);
+	const myPokemonList = useSelector((state) => {
+		return state.mypokemons.data;
+	});
+	const dispatch = useDispatch();
 
 	useEffect(() => {
-		fetchMyPokemonList();
+		dispatch(fetchMyPokemon());
 	}, []);
-
-	const fetchMyPokemonList = async () => {
-		try {
-			const response = await axios.get(
-				// "https://pokevault.ibnufajarweb.site/mypokemons/",
-				"http://localhost:3000/mypokemons",
-				{
-					headers: {
-						Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-					},
-				}
-			);
-
-			setMyPokemonList(response.data);
-		} catch (error) {
-			console.error("Failed to fetch my Pokemon list", error);
-		}
-	};
 
 	const handleDeletePokemon = async (id) => {
 		try {
-			await axios.delete(
-				`https://pokevault.ibnufajarweb.site/mypokemons/${id}`,
-				{
-					headers: {
-						Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-					},
-				}
-			);
+			await axios.delete(`/mypokemons/${id}`, {
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+				},
+			});
 
-			fetchMyPokemonList();
+			dispatch(deletePokemon(id));
 			Swal.fire("Success", "Pokemon deleted successfully", "success");
 		} catch (error) {
 			console.error("Failed to delete Pokemon", error);
+			Swal.fire("Error", "Failed to delete Pokemon", "error");
 		}
 	};
 
 	return (
 		<>
 			<Navbar />
-			<div className='container mx-auto mt-8'>
-				<h2 className='text-3xl font-bold mb-4 text-red-500'>
+			<div className='container mx-auto mt-8 p-4'>
+				<h2 className='text-3xl font-bold mb-6 text-red-500 text-center'>
 					My Pokemon List
 				</h2>
-				<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
+				<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
 					{myPokemonList.map((pokemon) => (
 						<div
 							key={pokemon.PokemonId}
-							className='bg-white rounded-lg overflow-hidden shadow-md p-4'>
+							className='bg-white rounded-xl overflow-hidden shadow-lg p-6 transform hover:scale-105 transition-transform'>
 							<img
 								src={pokemon.Pokemon.image}
 								alt={pokemon.Pokemon.name}

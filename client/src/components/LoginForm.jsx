@@ -7,8 +7,7 @@ import { GoogleLogin } from "@react-oauth/google";
 import Swal from "sweetalert2";
 
 const LoginForm = ({ onLogin }) => {
-	const CLIENT_ID =
-		"511330639928-qo2jmbbitgfc29s9g5rv1m99dc5oepo6.apps.googleusercontent.com";
+	const CLIENT_ID = `{process.env.CLIENT_GOOGLE_ID}`;
 	const [formData, setFormData] = useState({
 		email: "",
 		password: "",
@@ -48,10 +47,13 @@ const LoginForm = ({ onLogin }) => {
 	};
 
 	return (
-		<div className='login-form-container flex items-center justify-center min-h-screen'>
+		<div className='login-form-container flex items-center justify-center min-h-screen bg-gradient-to-r from-amber-400 via-red-600 to-red-400'>
 			<form
 				onSubmit={handleSubmit}
-				className='login-form bg-white p-8 rounded shadow-md'>
+				className='login-form bg-white p-20 rounded shadow-md bg-opacity-20 backdrop-blur-md'>
+				<h1 className='text-3xl font-bold mb-4 text-white text-center'>
+					Login
+				</h1>
 				<div className='mb-4'>
 					<label
 						htmlFor='email'
@@ -84,17 +86,20 @@ const LoginForm = ({ onLogin }) => {
 				</div>
 				<button
 					type='submit'
-					className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>
+					className='bg-red-500 hover:bg-amber-400 hover:text-gray-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300'>
 					Login
 				</button>
-				<p className='text-center text-gray-600 text-sm mt-4'>
+				<p className='text-center text-gray-900 text-sm mt-4'>
 					Dont have an account?{" "}
 					<Link
 						to='/players/register'
-						className='text-red-500 hover:text-red-700 rounded'>
+						className='text-white hover:text-amber-400 font-bold rounded'>
 						Register
 					</Link>
 				</p>
+				<h3 className='text-2xl text-center text-gray-900 text-sm mb-4 mt-4 font-bold'>
+					OR
+				</h3>
 				<GoogleLogin
 					clientId={CLIENT_ID}
 					buttonText='Login with Google'

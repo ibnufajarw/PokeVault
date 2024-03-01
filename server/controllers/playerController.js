@@ -88,8 +88,8 @@ class PlayerController {
 
 	static async getPlayerDetail(req, res, next) {
 		try {
-			const { id } = req.params;
-			const player = await Player.findByPk(id);
+			// const playerId = req.user.id;
+			const player = await Player.findByPk(req.user.id);
 
 			if (!player) {
 				throw { name: "NotFoundError" };

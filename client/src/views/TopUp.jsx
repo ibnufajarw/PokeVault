@@ -1,11 +1,12 @@
 /** @format */
 
 import TopUpForm from "../components/TopUpForm";
+import Navbar from "../components/Navbar";
 
 const TopUpPage = () => {
 	return (
 		<div>
-			<h1>Top Up Balance</h1>
+			<Navbar />
 			<TopUpForm />
 		</div>
 	);

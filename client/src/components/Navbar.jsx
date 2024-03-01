@@ -12,7 +12,7 @@ const Navbar = () => {
 	};
 
 	return (
-		<nav className='bg-red-500 p-2 shadow-md rounded'>
+		<nav className='bg-gradient-to-r from-amber-400 via-red-600 to-red-400 p-6 shadow-md rounded'>
 			<div className='container mx-auto flex justify-between items-center'>
 				<Link
 					to='/'

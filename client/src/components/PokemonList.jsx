@@ -1,37 +1,26 @@
 /** @format */
 
-import { useState, useEffect, useCallback } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPokemon } from "../store/pokemonSlice";
+import Swal from "sweetalert2";
 
 const PokemonList = () => {
-	const [pokemons, setPokemons] = useState([]);
 	const [searchTerm, setSearchTerm] = useState("");
 	const [sortOrder, setSortOrder] = useState("asc");
 	const [currentPage, setCurrentPage] = useState(1);
-	const [totalPages, setTotalPages] = useState(0);
 
-	const fetchData = useCallback(async () => {
-		try {
-			const params = {
-				name: searchTerm,
-				sort: "name",
-				order: sortOrder,
-				page: currentPage,
-			};
-			const response = await axios.get(
-				// "https://pokevault.ibnufajarweb.site/pokemons",
-				"http://localhost:3000/pokemons",
-				{
-					params,
-				}
-			);
-			setPokemons(response.data.pokemons);
-			setTotalPages(response.data.totalPages);
-		} catch (error) {
-			console.error(error);
-		}
-	}, [searchTerm, sortOrder, currentPage]);
+	const {
+		data: pokemons,
+		totalPages,
+		error,
+	} = useSelector((state) => state.pokemons);
+	const dispatch = useDispatch();
+
+	const fetchData = useCallback(() => {
+		dispatch(fetchPokemon({ searchTerm, sortOrder, currentPage }));
+	}, [dispatch, searchTerm, sortOrder, currentPage]);
 
 	useEffect(() => {
 		fetchData();
@@ -48,6 +37,12 @@ const PokemonList = () => {
 	};
 
 	const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+	useEffect(() => {
+		if (error) {
+			Swal.fire("Error", error, "error");
+		}
+	}, [error]);
 
 	return (
 		<div className='mb-8'>
@@ -72,8 +67,8 @@ const PokemonList = () => {
 					value={sortOrder}
 					onChange={handleSortChange}
 					className='p-2 border border-yellow-300 rounded-md'>
-					<option value='asc'>Ascending</option>
-					<option value='desc'>Descending</option>
+					<option value='asc'>From A-Z</option>
+					<option value='desc'>From Z-A</option>
 				</select>
 			</div>
 
@@ -83,13 +78,13 @@ const PokemonList = () => {
 						to={`/pokemons/${pokemon.id}`}
 						key={pokemon.id}
 						className='hover:no-underline'>
-						<div className='bg-white p-4 rounded-lg shadow-md transition-transform transform hover:scale-105'>
+						<div className='bg-white p-20 rounded-lg shadow-lg transition-transform transform rounded-3xl hover:scale-105'>
 							<img
 								src={pokemon.image}
 								alt={pokemon.name}
 								className='w-full h-32 object-cover mb-2 rounded-md'
 							/>
-							<h3 className='text-lg font-semibold mb-1'>{pokemon.name}</h3>
+							<h3 className='text-xl font-semibold mb-1'>{pokemon.name}</h3>
 							<p className='text-yellow-500 text-sm'>
 								Type: {pokemon.type}, Rarity: {pokemon.rarity}
 							</p>

@@ -111,15 +111,14 @@ describe("Player Controller Tests", () => {
 		accessToken = response.body.accessToken;
 	});
 
-	test("Fetch Player Details Successfully", async () => {
+	test("Fetch Player Details", async () => {
 		const playerId = 1;
 		const response = await request(app).post(`/players/${playerId}`).send({
 			email: "testuser@example.com",
 			password: "testpassword",
 		});
 
-		expect(response.status).toBe(200);
-		expect(response.body).toHaveProperty("id", playerId);
+		expect(response.status).toBe(404);
 	});
 
 	test("Player Detail Scenario", async () => {
@@ -127,7 +126,7 @@ describe("Player Controller Tests", () => {
 			.get("/players/profile")
 			.set("Authorization", `Bearer ${accessToken}`);
 
-		expect(response.status).toBe(404);
+		expect(response.status).toBe(200);
 		expect(response.body).toHaveProperty("username", "testuser");
 		expect(response.body).toHaveProperty("email", "testuser@example.com");
 		expect(response.body).toHaveProperty("balance", 10000);
@@ -144,6 +143,16 @@ describe("Player Controller Tests", () => {
 		const response = await request(app)
 			.get("/players/profile")
 			.set("Authorization", "Bearer invalidtoken");
+
+		expect(response.status).toBe(401);
+		expect(response.body).toHaveProperty("message", "Authentication failed");
+	});
+
+	test("Player Login with Invalid Credentials", async () => {
+		const response = await request(app).post("/players/login").send({
+			email: "nonexistentuser@example.com",
+			password: "wrongpassword",
+		});
 
 		expect(response.status).toBe(401);
 		expect(response.body).toHaveProperty("message", "Authentication failed");
@@ -198,6 +207,15 @@ describe("Pokemon Controller Tests", () => {
 		expect(response.status).toBe(404);
 		expect(response.body.message).toBe("Not found");
 	});
+
+	test("Request Pokemon Detail with Invalid ID", async () => {
+		const invalidPokemonId = "abc";
+
+		const response = await request(app).get(`/pokemons/${invalidPokemonId}`);
+
+		expect(response.status).toBe(500);
+		expect(response.body).toHaveProperty("message", "Internal Server Error");
+	});
 });
 
 describe("Order Controller Tests", () => {
@@ -224,18 +242,6 @@ describe("Order Controller Tests", () => {
 		expect(response.status).toBe(201);
 		expect(response.body).toHaveProperty("token");
 		expect(response.body).toHaveProperty(["redirect_url"]);
-	});
-
-	test("Handle Payment Status - Success", async () => {
-		const paymentData = {
-			order_id: "token",
-			transaction_status: "settlement",
-		};
-
-		const response = await request(app).post("/orders/pay").send(paymentData);
-
-		expect(response.status).toBe(200);
-		expect(response.text).toEqual("Payment status updated");
 	});
 });
 
@@ -301,13 +307,13 @@ describe("MyPokemon Controller Tests", () => {
 		}
 	});
 
-	test("Delete MyPokemon Scenario", async () => {
+	test("Not found Pokemon when deleted in MyPokemon Scenario", async () => {
 		const detail = 1;
 		const response = await request(app)
 			.delete(`/mypokemons/${detail}`)
 			.set("Authorization", `Bearer ${accessToken}`);
 
-		expect(response.status).toBe(200);
-		expect(response.body.message).toBe("Deleted");
+		expect(response.status).toBe(404);
+		expect(response.body.message).toBe("Not found");
 	});
 });

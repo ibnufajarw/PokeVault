@@ -3,7 +3,7 @@
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import RegisterForm from "../components/RegisterForm";
-import axios from "axios";
+import axios from "../components/instances/instance";
 import Swal from "sweetalert2";
 
 const Register = () => {
@@ -11,11 +11,7 @@ const Register = () => {
 
 	const handleRegister = async (formData) => {
 		try {
-			const response = await axios.post(
-				// "https://pokevault.ibnufajarweb.site/players/register",
-				"http://localhost:3000/players/register",
-				formData
-			);
+			const response = await axios.post(`/players/register`, formData);
 
 			console.log(response.data);
 			Swal.fire({
